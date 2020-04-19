@@ -1,6 +1,5 @@
 import React from 'react';
 import { Menu } from 'antd';
-
 import axios from 'axios';
 import { USER_SERVER } from '../../../Config';
 import { withRouter } from 'react-router-dom';
@@ -15,27 +14,26 @@ function RightMenu(props) {
         props.history.push("/");
         alert('Log Out ')
       } else {
-        alert('Log Out Failed')
-      }
-    });
-  };
+        alert('Log Out Failed')  }
+
+    });    };
 
   if (user.userData && user.userData.isAuth) {
-    return (
-      
-      <Menu mode={props.mode}>
-        <Menu.Item key="Reports">
-      <a href="/reports">Reports</a>
-      </Menu.Item>
-        <Menu.Item key="Plan">
-      <a href="/plan">Plan</a>
-      </Menu.Item>
-      <Menu.Item key="logout">
-        <a onClick={logoutHandler}>Logout</a>
-      </Menu.Item>
-    </Menu>
-    )
- }else{
+  return (
+    
+    <Menu mode={props.mode}>
+      <Menu.Item key="Reports">
+    <a href="/reports">Reports</a>
+    </Menu.Item>
+      <Menu.Item key="Plan">
+    <a href="/plan">Plan</a>
+    </Menu.Item>
+    <Menu.Item key="logout">
+      <a onClick={logoutHandler}>Logout</a>
+    </Menu.Item>
+  </Menu>
+  )
+}else{
       return(
       <Menu mode={props.mode}>
         <Menu.Item key="mail">
@@ -50,3 +48,23 @@ function RightMenu(props) {
 }
 
 export default withRouter(RightMenu);
+
+
+
+// if (user.userData && user.userData.isAdmin) {
+//  return (
+//   <Menu mode={props.mode}>
+//     <Menu.Item key="Reports">
+//   <a href="/reports">Reports</a>
+//   </Menu.Item>
+//    <Menu.Item key="Plan">
+//  <a href="/plan">Plan</a>
+//  </Menu.Item>
+//  <Menu.Item key="Staff">
+//   <a >Staff</a>
+//  </Menu.Item>
+//  <Menu.Item key="logout">
+//    <a onClick={logoutHandler}>Logout</a>
+//  </Menu.Item>  
+// </Menu>
+// )}else

@@ -9,13 +9,16 @@ User.find()
 .then(users=>res.json(users))
 .catch(err=>res.status(400).json('Error: '+err));
 });
+
 router.get("/auth", auth, (req, res) => {
     res.status(200).json({
         _id: req.user._id,
         isAdmin: req.user.role === 0 ? false : true,
         isAuth: true,
         email: req.user.email,
-        name: req.user.name,
+        firstname: req.user.firstname,
+        lastname: req.user.lastname,
+        phone: req.user.phone,
         role: req.user.role,
         image: req.user.image,
         admin: req.user.admin,
@@ -72,35 +75,7 @@ router.get("/logout", auth, (req, res) => {
     });
 });
 
-router.delete("/:id",(req,res,next)=>{
-    const id =req.params.id;
-    User.remove({_id:id})
-    .exec()
-    .then(result=>{
-        res.status(200).json(result);
-    })
-    .catch(err=>{
-        console.log(err);
-        res.status(500).json({
-       error:err
-   }); });});
 
-   router.post("/update/:id",(req,res,next)=>{
-    const id =req.params._id;
-    User.findOneAndUpdate({id:id})
-    .then(user=>{
-        
-        user.email=req.user.email;
-        user.name=req.user.name;
-        user.image=req.user.image;
-        
-    user.save()
-    .then (()=>res.json('Exerise updates:!'))
-    .catch(err=>res.status(400).json('Error: '+err));
-})
-.catch(err=>res.status(400).json('Error: '+err))
-
-    });
 
 
 module.exports = router;

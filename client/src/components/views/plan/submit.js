@@ -1,21 +1,19 @@
 import axios from 'axios'
 
 
-export const submitPlan = newIncident => {
+export const submitPlan = newPlan => {
   return axios
-    .post('http://localhost:5000/api/incident/add', {
-        admin: newIncident.admin,
-        incidentDate: newIncident.incidentDate,
-        incidentName: newIncident.incidentName,
-        incidentCriticality: newIncident.incidentCriticality,
-        name: newIncident.name,
-        address: newIncident.address,
-        mobile: newIncident.mobile,
-        email: newIncident.email,
-        departmentAffected: newIncident.departmentAffected,
-        incidentDescription: newIncident.incidentDescription,
-        resolutionDiscretion: newIncident.resolutionDiscretion,
-        recommendation: newIncident.recommendation,
+    .post('http://localhost:5000/api/plan/add', {
+        admin: newPlan.admin,
+        fireIncident: newPlan.fireIncident,
+        electricityIncident: newPlan.electricityIncident,
+        attackIncident: newPlan.attackIncident,
+        internalContact: newPlan.internalContact,
+        externalContact: newPlan.externalContact,
+        team: newPlan.team,
+        human: newPlan.human,
+        equipmemt: newPlan.equipmemt,
+        system: newPlan.system,
       
       
     })

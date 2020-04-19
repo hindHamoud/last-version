@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { loginUser } from "../../../_actions/user_actions";
 import { Formik } from 'formik';
-import './login.css'
+
 import * as Yup from 'yup';
 import { Form, Icon, Input, Button, Checkbox, Typography } from 'antd';
 import { useDispatch } from "react-redux";
@@ -105,7 +105,7 @@ function LoginPage(props) {
               </Form.Item>
 
               <Form.Item required>
-                <Input className='input'
+                <Input.Password className='input'
                   id="password"
                   prefix={<Icon type="lock"  />}
                   placeholder="Enter your password"

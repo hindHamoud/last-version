@@ -1,52 +1,35 @@
 mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
 const incidentSchema = mongoose.Schema({
-   
     admin: {
         type: Schema.Types.ObjectId,
-       ref: 'User'
-    },
+       ref: 'User' },
     date:{
         type:Date,
-        default:Date.now
-    },
+        default:Date.now},
     incidentDate : {
-        type: Date
-    },
+        type: Date},
     incidentName:{
-        type:String
-    },
+        type:String },
     incidentCriticality:{
-        type:String
-    },
+        type:String },
     name:{
-        type:String
-    },
+        type:String},
     address:{
-        type:String
-    },
+        type:String},
     mobile:{
-        type:String
-    },
+        type:String},
     email:{
-        type:String
-    },
+        type:String},
     departmentAffected:{
-        type:String
-    },
+        type:String },
     incidentDescription:{
-        type:String
-    },
+        type:[String]},
     resolutionDiscretion:{
-        type:String
-    },
+        type:[String]},
     recommendation:{
-        type:String
-    }
+        type:[String] }
 }
 );
-
 const Incident = mongoose.model('incident', incidentSchema);
-
 module.exports = { Incident }

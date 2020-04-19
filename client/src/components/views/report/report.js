@@ -1,10 +1,9 @@
 import React from 'react';
 import { INCIDENT_SERVER} from '../../Config'
 import {connect} from "react-redux";
-import{ProgressBar}from 'react-mdl';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf'
-import {  Button, message } from 'antd';
+import {  Button, message,Spin } from 'antd';
 
   class select extends React.Component {
 
@@ -17,6 +16,7 @@ import {  Button, message } from 'antd';
   }
 
 
+  
 
 componentDidMount = () => {
   fetch(`${INCIDENT_SERVER}/`)
@@ -27,8 +27,8 @@ componentDidMount = () => {
       reports:json,
     })
   })
-   
-  }
+  
+}
   printDocument=()=> {
     const pdf = new jsPDF("l", "mm", "a4");
     const input = document.getElementById('pdf');
@@ -50,9 +50,9 @@ componentDidMount = () => {
     render(){
       const{isLoading,reports}=this.state;
       if(!isLoading){
-        return <ProgressBar indeterminate />
+        return <Spin size="large" />
       }else {return (
-        <div className="tables" style={{margin:'20px'}}>
+        <div className="tables"  style={{margin:'20px',width:'70%'}}>
       {reports.map(report=>{if(this.props.id === report._id)
         return<div>
           <div id="pdf">
@@ -87,13 +87,6 @@ componentDidMount = () => {
   </tr>
 
   <tr className="tr">
-    <td className="td" style={{fontWeight:'bold'}}>Address</td>
-    <td className="td">{report.address.split('\n').map(i => {
-            return(<div>{i}</div>) 
-        })}</td>
-  </tr>
-
-  <tr className="tr">
     <td className="td" style={{fontWeight:'bold'}}>Mobile Number</td>
     <td className="td">{report.mobile}</td>
   </tr>
@@ -104,7 +97,7 @@ componentDidMount = () => {
   </tr >
 
   <tr className="tr">
-    <td className="td" style={{fontWeight:'bold'}}>Department have been affected by the incident </td>
+    <td className="td" style={{fontWeight:'bold'}}> Affected department </td>
     <td className="td">{report.departmentAffected}</td>
   </tr>
 
@@ -115,15 +108,15 @@ componentDidMount = () => {
 
 <table className="table">
   <tr className="tr"><td className="td" style={{background:'#afcdcf',fontWeight:'bold'}}>INCIDENT DESCRIPTION</td></tr>
-  <tr className="tr"><td className="td" style={{height:'70px'}}> {report.incidentDescription.split('\n').map(i => {
+  <tr className="tr"><td className="td" style={{height:'70px'}}> {report.incidentDescription.map(i => {
             return(<div>{i}</div>) 
         })}</td></tr>
   <tr className="tr"><td className="td" style={{background:'#afcdcf',fontWeight:'bold'}}>RESOLUTION DISCRETION AND STEPS</td></tr>
-  <tr className="tr"><td className="td" style={{height:'70px'}}> {report.resolutionDiscretion.split('\n').map(i => {
+  <tr className="tr"><td className="td" style={{height:'70px'}}> {report.resolutionDiscretion.map(i => {
             return(<div>{i}</div>) 
         })}</td></tr>
   <tr className="tr"><td className="td" style={{background:'#afcdcf',fontWeight:'bold'}}>RECOMMENDATIONS</td></tr>
-  <tr className="tr"><td className="td" style={{height:'70px'}} > {report.recommendation.split('\n').map(i => {
+  <tr className="tr"><td className="td" style={{height:'70px'}} > {report.recommendation.map(i => {
             return(<div>{i}</div>) 
         })}</td></tr>
         </table></div><Button onClick={this.printDocument} type="primary" > download as PDF </Button></div>})}

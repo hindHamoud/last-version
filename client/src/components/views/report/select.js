@@ -1,12 +1,13 @@
 import React from 'react';
-
+import { Button,Select,Radio  } from 'antd';
 import { INCIDENT_SERVER} from '../../Config'
-import { Route, Switch, BrowserRouter as Router, Link, withRouter } from "react-router-dom";
+import { Route, Switch, BrowserRouter as Router, Link } from "react-router-dom";
 import {connect} from "react-redux";
-import { Layout, Drawer, Navigation, Content,Button } from "react-mdl";
-import { Container, Row } from "react-bootstrap";
-import { CommentOutlined, UserOutlined,ReconciliationOutlined } from "@ant-design/icons";
+import { Layout, Drawer, Navigation, Content} from "react-mdl";
+import { Container } from "react-bootstrap";
+import New from './incident'
 import Report from './report'
+
 
   class select extends React.Component {
 
@@ -15,7 +16,12 @@ import Report from './report'
       this.state = {
           isLoading: false,
           reports: [] ,
-        id:''  } }
+        id:'',
+        update:0  } }
+
+        componentDidUpdate(pP,pS,sS){
+          if(this.state.update === 1){
+          }}
 
 
 componentDidMount = () => {
@@ -53,6 +59,9 @@ componentDidMount = () => {
               </Drawer>
               <Content>
                 <Switch>
+                  
+                <Route exact path="/reports/" component={New} />
+
                   <Route path={`/reports/${this.state.id}`}>
                     <Container>
                       

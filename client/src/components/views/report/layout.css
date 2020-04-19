@@ -1,13 +1,13 @@
 
-.background1{
+.background{
     position: relative;
-    height: 500px;
+    height: 300px;
     width: 100%;
 }
-.text11
+.text1
 { 
 position: absolute; 
-top: 110px; 
+top: 140px; 
 width: 100%; 
 text-align: center;
 color: #606061d3;

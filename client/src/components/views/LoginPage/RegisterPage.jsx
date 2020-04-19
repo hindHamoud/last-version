@@ -5,33 +5,25 @@ import * as Yup from 'yup';
 import { registerUser } from "../../../_actions/user_actions";
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
-import {
-  Form,
-  Input,
-  Button,
-} from 'antd';
+import {Form,Input,Button,} from 'antd';
 
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 8 },
-  },
+    sm: { span: 8 },},
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 16 },
-  },
+    sm: { span: 16 },},
 };
+
 const tailFormItemLayout = {
   wrapperCol: {
     xs: {
       span: 24,
-      offset: 0,
-    },
+      offset: 0,},
     sm: {
       span: 16,
-      offset: 8,
-    },
+      offset: 8,},
   },
 };
 
@@ -42,13 +34,18 @@ function RegisterPage(props) {
     <Formik
       initialValues={{
         email: '',
-        name: '',
-        password: '',
-        confirmPassword: '',
-       }}
+        fristname: '',
+        lastname:'',
+         password: '',
+        confirmPassword: '',}}
+
       validationSchema={Yup.object().shape({
-        name: Yup.string()
-          .required('Name is required'),
+        firstname: Yup.string()
+          .required('First Name is required'),
+          lastname: Yup.string()
+          .required('Last Name is required'),
+          phone: Yup.string()
+          .required('Phone number is required'),
         email: Yup.string()
           .email('Email is invalid')
           .required('Email is required'),
@@ -57,31 +54,29 @@ function RegisterPage(props) {
           .required('Password is required'),
         confirmPassword: Yup.string()
           .oneOf([Yup.ref('password'), null], 'Passwords must match')
-          .required('Confirm Password is required')
-      })}
+          .required('Confirm Password is required')})}
+
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
 
           let dataToSubmit = {
             email: values.email,
             password: values.password,
-            name: values.name,
+            firstname: values.firstname,
+            lastname: values.lastname,
+            phone: values.phone,
             image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`,
-            role:1
-          };
+            role:1 };
 
           dispatch(registerUser(dataToSubmit)).then(response => {
             if (response.payload.success) {
               props.history.push("/login");
             } else {
-              alert(response.payload.err.errmsg)
-            }
-          })
+              alert(response.payload.err.errmsg)} })
 
           setSubmitting(false);
-        }, 500);
-      }}
-    >
+        }, 500);}}>
+
       {props => {
         const {
           values,
@@ -92,29 +87,59 @@ function RegisterPage(props) {
           handleBlur,
           handleSubmit,
         } = props;
+
         return (
           <div className="app">
             <h2>Sign up</h2>
             <Form style={{ minWidth: '375px' }} {...formItemLayout} onSubmit={handleSubmit} >
 
-              <Form.Item required label="Name">
+              <Form.Item required label="First name">
                 <Input
-                  id="name"
+                  id="firstname"
                   placeholder="Enter your name"
                   type="text"
-                  value={values.name}
+                  value={values.firstname}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className={
-                    errors.name && touched.name ? 'text-input error' : 'text-input'
+                    errors.firstname && touched.firstname ? 'text-input error' : 'text-input'} />
+                    
+                {errors.firstname && touched.firstname && (
+                  <div className="input-feedback">{errors.firstname}</div> )}
+
+              </Form.Item>
+              <Form.Item required label="Last Name">
+                <Input
+                  id="lastname"
+                  placeholder="Enter your Last Name"
+                  type="text"
+                  value={values.lastname}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={
+                    errors.lastname && touched.lastname ? 'text-input error' : 'text-input'
                   }
                 />
-                {errors.name && touched.name && (
-                  <div className="input-feedback">{errors.name}</div>
+                {errors.lastname && touched.lastname && (
+                  <div className="input-feedback">{errors.lastname}</div>
                 )}
               </Form.Item>
-
-              
+              <Form.Item required label="Phone Number">
+                <Input
+                  id="phone"
+                  placeholder="Enter your Phone number"
+                  type="text"
+                  value={values.phone}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={
+                    errors.phone && touched.phone ? 'text-input error' : 'text-input'
+                  }
+                />
+                {errors.phone&& touched.phone && (
+                  <div className="input-feedback">{errors.phone}</div>
+                )}
+              </Form.Item>
 
               <Form.Item required label="Email" hasFeedback validateStatus={errors.email && touched.email ? "error" : 'success'}>
                 <Input
@@ -125,16 +150,16 @@ function RegisterPage(props) {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className={
-                    errors.email && touched.email ? 'text-input error' : 'text-input'
-                  }
-                />
+                    errors.email && touched.email ? 'text-input error' : 'text-input' } />
                 {errors.email && touched.email && (
-                  <div className="input-feedback">{errors.email}</div>
-                )}
+                  <div className="input-feedback">{errors.email}</div> )}
               </Form.Item>
 
+              
+
+
               <Form.Item required label="Password" hasFeedback validateStatus={errors.password && touched.password ? "error" : 'success'}>
-                <Input
+                <Input.Password
                   id="password"
                   placeholder="Enter your password"
                   type="password"
@@ -142,16 +167,14 @@ function RegisterPage(props) {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className={
-                    errors.password && touched.password ? 'text-input error' : 'text-input'
-                  }
-                />
+                    errors.password && touched.password ? 'text-input error' : 'text-input' }/>
+
                 {errors.password && touched.password && (
-                  <div className="input-feedback">{errors.password}</div>
-                )}
+                  <div className="input-feedback">{errors.password}</div> )}
               </Form.Item>
 
               <Form.Item required label="Confirm" hasFeedback>
-                <Input
+                <Input.Password
                   id="confirmPassword"
                   placeholder="Enter your confirmPassword"
                   type="password"
@@ -159,12 +182,10 @@ function RegisterPage(props) {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className={
-                    errors.confirmPassword && touched.confirmPassword ? 'text-input error' : 'text-input'
-                  }
-                />
+                    errors.confirmPassword && touched.confirmPassword ? 'text-input error' : 'text-input'  } />
+
                 {errors.confirmPassword && touched.confirmPassword && (
-                  <div className="input-feedback">{errors.confirmPassword}</div>
-                )}
+                  <div className="input-feedback">{errors.confirmPassword}</div>  )}
               </Form.Item>
 
               <Form.Item {...tailFormItemLayout}>
@@ -173,12 +194,9 @@ function RegisterPage(props) {
                 </Button>
               </Form.Item>
             </Form>
-          </div>
-        );
-      }}
+          </div> ); }}
     </Formik>
   );
 };
-
 
 export default withRouter(RegisterPage)
